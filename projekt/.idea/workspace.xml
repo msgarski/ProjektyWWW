@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d6823df-94ff-4c3a-b036-007316d8990b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/generalValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/generalValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/generalValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../zawod_front_end_book/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../zawod_front_end_book/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +57,25 @@
       <workItem from="1605343293031" duration="4173000" />
       <workItem from="1605684550186" duration="222000" />
       <workItem from="1606305064406" duration="4318000" />
+      <workItem from="1606373306077" duration="5298000" />
+      <workItem from="1606488279682" duration="10584000" />
+      <workItem from="1606550710485" duration="6850000" />
+      <workItem from="1607098422480" duration="5520000" />
+      <workItem from="1607116809002" duration="9767000" />
+      <workItem from="1607760678271" duration="6018000" />
+      <workItem from="1608118299622" duration="2511000" />
+      <workItem from="1608189625561" duration="7734000" />
+      <workItem from="1608271282795" duration="371000" />
+      <workItem from="1608276013806" duration="9675000" />
+      <workItem from="1608367198393" duration="6304000" />
+      <workItem from="1609843154982" duration="8797000" />
+      <workItem from="1610168609140" duration="11157000" />
+      <workItem from="1610436071709" duration="2612000" />
+      <workItem from="1610535713678" duration="5026000" />
+      <workItem from="1610611457192" duration="13271000" />
+      <workItem from="1610631682101" duration="5200000" />
+      <workItem from="1610638363398" duration="2994000" />
+      <workItem from="1610643610397" duration="1119000" />
     </task>
     <servers />
   </component>
@@ -62,9 +83,17 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="309" y="61" key="#Inspections" timestamp="1610616561412">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="309" y="61" key="#Inspections/0.0.1366.768@0.0.1366.768" timestamp="1610616561412" />
     <state x="463" y="137" key="FileChooserDialogImpl" timestamp="1604838527875">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="463" y="137" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1604838527875" />
+    <state x="339" y="167" key="run.anything.popup" timestamp="1610640158215">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="339" y="167" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1610640158215" />
   </component>
 </project>

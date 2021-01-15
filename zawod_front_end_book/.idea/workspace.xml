@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac6b07c-7eab-4797-bd0d-84461c7db1a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../projekt/js/generalValidation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index_test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../projekt/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../projekt/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../projekt/js/generalValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../projekt/js/generalValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../projekt/js/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../projekt/js/validation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +47,8 @@
       <option name="presentableId" value="Default" />
       <updated>1605684830654</updated>
       <workItem from="1605684831748" duration="6436000" />
-      <workItem from="1606315434437" duration="2436000" />
+      <workItem from="1606315434437" duration="3034000" />
+      <workItem from="1606487496227" duration="606000" />
     </task>
     <servers />
   </component>

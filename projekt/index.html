@@ -8,7 +8,115 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- Moje style css -->
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/theme.blue.css">
     <title>Moja stronka</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.combined.js"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.widgets.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/generalValidation.js"></script>
+    <script> $(function() {
+            $("#myTable").tablesorter();
+    });</script>
+    <!--
+    <script>$(function() {
+       //$("table").tablesorter({ theme : 'blue', sortList: [[3,1],[0,0]] });
+        $('button').click(function() {
+            alert('wprowadza')
+            let item = document.getElementById('inputName').value;
+            //antiRedundant(item);
+            // check validation at the end:
+            if(validAll()){
+                // add two rows
+                var row = '<tr><td>'+document.getElementById('inputName').value+'</td>' +
+                    '<td>'+document.getElementById('inputKod').value+'</td>' +
+                    '<td>'+document.getElementById('inputCenaNetto').value+'</td>' +
+                    '<td>'+document.getElementById('inputVat').value+'</td>' +
+                    '<td>'+document.getElementById('inputCenaBrutto').value+'</td>' +
+                    '<td>'+getKategoria()+'</td>' +
+                    '<td>'+getOpcje()+'</td>' +
+                    '<td>'+getOcena()+'</td>' +
+                    '<td>fotka.jpg</td>' +
+                    '<td><button type="button" class="basket" title="toBasket">DO KOSZYKA</button>' +
+                    '<button type="button" class="edit" title="toEdition" onclick="editRow()">EDYCJA</button>' +
+                    '<button type="button" class="remove" title="Remove this row" onclick="deleteRow()">USUŃ</button></td></tr>',
+
+                    $row = $(row),
+                    // resort table using the current sort; set to false to prevent resort, otherwise
+                    // any other value in resort will automatically trigger the table resort.
+                    resort = true;
+                clearAll();
+
+                // // Delete a row
+                // $('#myTable').delegate('button.remove', 'click' ,function() {
+                //     var t = $('#myTable');
+                //     // disabling the pager will restore all table rows
+                //     // t.trigger('disablePager');
+                //     // remove chosen row
+                //     $(this).closest('tr').remove();
+                //     // restore pager
+                //     // t.trigger('enablePager');
+                //     t.trigger('update');
+                //
+                //     return false;
+                // });
+
+                // Adding a row:
+                $('#myTable')
+                    .find('tbody').append($row)
+                    .trigger('addRows', [$row, resort]);
+                return false;
+            }
+        });
+    });</script>
+    -->
+    <script>$(function() {
+        $('#inputName').onblur(function (){
+            $('#myTable').each(function () {
+                let texttocheck = this.innerText.trim();
+                if (texttocheck === "dom") {
+                    let errMsg = "user already exists in the list";
+                    alert(errMsg);
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            })
+        })
+    });</script>
+    <script>$(function() {
+        // czemuś nie działa....
+        $("#extSorting").onchange(function() {// apply an ascending sort on the 5th column (zero-based index)
+            $("#myTable").trigger("sorton",[ [[0,1]] ]);
+            return false;});
+    });</script>
+    <script>$(function() {
+        $('#myTable').delegate('button.basket', 'click', function() {
+            let curRow = $(this).closest('tr');
+            let item = {
+                name: curRow.find('td:eq(0)').text(),
+                kod: curRow.find('td:eq(1)').text(),
+                cenaNetto: curRow.find('td:eq(2)').text(),
+                vat: curRow.find('td:eq(3)').text(),
+                cenaBrutto: curRow.find('td:eq(4)').text(),
+                liczbaSztuk: '1',
+            }
+            let items = [];
+            if(window.localStorage.getItem('koszyk') === null){
+                items.push(item);
+                window.localStorage.setItem('koszyk', JSON.stringify(items));
+            }
+            else{
+                let kosz = JSON.parse(window.localStorage.getItem('koszyk'));
+                kosz.push(item);
+                window.localStorage.setItem('koszyk',JSON.stringify(kosz));
+            }
+        });
+    });</script>
+
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -48,32 +156,33 @@
                     <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Nazwa Towaru</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="inputName" placeholder="tutaj wpisz nazwę towaru...">
+                            <input class="form-control" type="text" id="inputName" placeholder="tutaj wpisz nazwę towaru..."
+                                   onblur="validInputName(); isValueInTable()">
+                            <div id="inputName_error"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputKod" class="col-sm-2 col-form-label">Kod Towaru</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="inputKod" placeholder="tutaj wpisz kod towaru...">
+                            <input class="form-control" type="text" id="inputKod" placeholder="tutaj wpisz kod towaru..."
+                             onblur="validCode()">
+                            <div id="inputKod_error"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputCenaNetto" class="col-sm-2 col-form-label">Cena Netto</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="text" id="inputCenaNetto"
-                                   placeholder="tutaj wpisz cenę towaru..." onblur="validCenaNetto()">
+                                   placeholder="tutaj wpisz cenę towaru..." onblur="validCenaNetto(); validBrutto()">
                             <div id="inputCenaNetto_error"></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputVAT" class="col-sm-2 col-form-label">Stawka VAT</label>
+                        <label for="inputVat" class="col-sm-2 col-form-label">Stawka VAT</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="inputVAT">
-                                <option selected>Wybierz stawkę vat z listy:</option>
-                                <option value="1">5 %</option>
-                                <option value="2">8 %</option>
-                                <option value="3">23 %</option>
-                            </select>
+                            <input class="form-control" type="text" id="inputVat"
+                                   placeholder="podaj stawkę VAT" onblur="validVat(); validBrutto()">
+                            <div id="inputVat_error"></div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -85,38 +194,40 @@
                     <div class="form-group row">
                         <label for="inputKategoria" class="col-sm-2 col-form-label">Kategoria towaru</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="inputKategoria">
+                            <select class="custom-select" id="inputKategoria"  value="" onblur="validKategoria()">
                                 <option selected>Wybierz kategorię z listy:</option>
                                 <option value="1">odzież</option>
                                 <option value="2">kosmetyki</option>
                                 <option value="3">żywność</option>
                             </select>
+                            <div id="inputKategoria_error"></div>
                         </div>
                     </div>
                     <fieldset class="form-group">
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">Opcje towaru:</legend>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10" >
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                    <input type="checkbox" class="custom-control-input inputOpcje" id="customSwitch1">
                                     <label class="custom-control-label" for="customSwitch1">Opcja 1</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                    <input type="checkbox" class="custom-control-input inputOpcje" id="customSwitch2">
                                     <label class="custom-control-label" for="customSwitch2">Opcja 2</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch3">
+                                    <input type="checkbox" class="custom-control-input inputOpcje" id="customSwitch3">
                                     <label class="custom-control-label" for="customSwitch3">Opcja 3</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch4">
+                                    <input type="checkbox" class="custom-control-input inputOpcje" id="customSwitch4">
                                     <label class="custom-control-label" for="customSwitch4">Opcja 4</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch5">
+                                    <input type="checkbox" class="custom-control-input inputOpcje " id="customSwitch5">
                                     <label class="custom-control-label" for="customSwitch5">Opcja 5</label>
                                 </div>
+                                <div id="checkboxOpcja_error"></div>
                             </div>
                         </div>
                     </fieldset>
@@ -144,21 +255,62 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label" for="customFile">Załaduj zdjęcie produktu</label>
+                        <label for="inputfotka" class="col-sm-2 col-form-label">Zdjęcie produktu</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="inputfotka" placeholder="fotka.jpg">
                         </div>
+                        <div id="button_error"></div>
                     </div>
                     <div class="buttonholder">
                         <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Zatwierdź wszystko</button>
+                            <button type="button" class="btn btn-primary" id="button" onclick="wprowadzanie()">Wprowadź artykuł</button>
+                            <button type="button" class="btn btn-primary" id="buttonEdit" style="visibility:hidden" onclick="refreshRow()">Zatwierdź po edycji</button>
                         </div>
+
                     </div>
                 </form>
             </div>
             <div class="col-sm-4 col-md-2 col-lg-1 alert-warning">
                 Kolumna trzecia
             </div>
+            <div class="popupwindow" id="info" style="visibility: hidden"> usunięto jeden rekord</div>
+            <div class="sorting" id="externalSorting">
+                <select class="change-input" id="extSorting" onchange="sortowanie(this)">
+                    <option value="cenaA">wybierz sortowanie</option>
+                    <option value="nazwaA">nazwa od A</option>
+                    <option value="nazwaZ">nazwa od Z</option>
+                    <option value="cenaA">cena od najniższej</option>
+                    <option value="cenaZ">cena od najwyższej</option>
+                    <option value="ocenaA">ocena od najniższej</option>
+                    <option value="ocenaZ">ocena od najwyższej</option>
+
+                </select>
+            </div>
+            <table id="myTable" class="tablesorter tablesorter-blue">
+                <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th class="sorter-false">Kod</th>
+                    <th class="sorter-false">Cena netto</th>
+                    <th class="sorter-false">Vat</th>
+                    <th>Cena brutto</th>
+                    <th class="sorter-false">Kateoria</th>
+                    <th class="sorter-false">Opcje</th>
+                    <th>Ocena</th>
+                    <th class="sorter-false">Zdjęcie</th>
+                    <th class="sorter-false" width="250">Działania</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>dom</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>1</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                <tr><td>hkkk</td><td>66-22</td><td>10</td><td>3</td><td>14</td><td>2,3</td><td>2,2</td><td>3</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                <tr><td>asi</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>4</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                <tr><td>jek</td><td>66-22</td><td>10</td><td>3</td><td>20</td><td>2,3</td><td>2,2</td><td>5</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                <tr><td>bkk</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>3</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                <tr><td>ckkke</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>1</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                <tr><td>rkkk</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>2</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
@@ -190,14 +342,28 @@
         </div>
     </div>
 </div>
-<script src="js/validation.js"></script>
-<script src="js/generalValidation.js"></script>
+
 </body>
 
 <!-- Optional JavaScript; choose one of the two! -->
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<!--
+<script>
+    // sprawdzenie ,czy załadowany jest jquery
+    window.onload = function() {
+        if (window.jQuery) {
+            // jQuery is loaded
+            alert("Yeah!");
+        } else {
+            // jQuery is not loaded
+            alert("Doesn't Work");
+        }
+    }
+</script>
+-->
 
 <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
