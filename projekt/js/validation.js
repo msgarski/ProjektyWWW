@@ -369,7 +369,6 @@ function editRow(){
         }
         // ocena:
         let ktoryRadio = 'exampleRadios' + curRow.find('td:eq(7)').text();
-        alert(ktoryRadio);
         document.getElementById(ktoryRadio).checked =true;
 
         document.getElementById("button").style.visibility = 'hidden';
@@ -385,7 +384,19 @@ function editRow(){
 
 function refreshRow(){
     let rowIndex = JSON.parse(window.localStorage.getItem('editingRowId'));
-    document.getElementById('myTable').rows[rowIndex+1].cells[0].innerHTML = document.getElementById('inputName').value;
+    let editedRow = document.getElementById('myTable').rows[rowIndex+1];
+    if(validAll()){
+        editedRow.cells[0].innerHTML = document.getElementById('inputName').value;
+        editedRow.cells[1].innerHTML = document.getElementById('inputKod').value;
+        editedRow.cells[2].innerHTML = document.getElementById('inputCenaNetto').value;
+        editedRow.cells[3].innerHTML = document.getElementById('inputVat').value;
+        editedRow.cells[4].innerHTML = document.getElementById('inputCenaBrutto').value;
+        editedRow.cells[5].innerHTML = getKategoria();
+        editedRow.cells[6].innerHTML = getOpcje();
+        editedRow.cells[7].innerHTML = getOcena();
+    }
+
+    // document.getElementById('myTable').rows[rowIndex+1].cells[0].innerHTML = document.getElementById('inputName').value;
     document.getElementById("buttonEdit").style.visibility = 'hidden';
     //document.getElementById("button").disabled = true;
     document.getElementById("button").style.visibility = 'visible';
@@ -423,7 +434,7 @@ function sendToBasket(){
 
 function wprowadzanie(){
         if(validAll()){
-            // add two rows
+            // add row
             var row = '<tr><td>'+document.getElementById('inputName').value+'</td>' +
                 '<td>'+document.getElementById('inputKod').value+'</td>' +
                 '<td>'+document.getElementById('inputCenaNetto').value+'</td>' +
