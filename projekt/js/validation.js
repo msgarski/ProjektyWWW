@@ -3,7 +3,6 @@ function validCenaNetto(){
     let itemValError = document.querySelector('#inputCenaNetto_error');
     let pattern = /^(\d*([.]?(?=\d+))\d+)$/;
 
-
     if(item.value.length === 0){
         nieOkey(item,itemValError,"pole musi być uzupełnione");
         return false;
@@ -13,9 +12,7 @@ function validCenaNetto(){
             if(item.value.match(pattern)){
                 let v = parseFloat(item.value);
                 item.value = v.toFixed(2);
-
                 okey(item,itemValError,"wydaje się ok");
-
                 return true;
             }
             else{
@@ -33,30 +30,13 @@ function validInputName(){
     let item = document.querySelector('#inputName');
     let itemValError = document.querySelector('#inputName_error');
     let pattern = /^[A-Za-z]+$/;
-    let spr = true;
-
-    // checking name for avoid redundant:
-    $("#myTable tr td:nth-child(1)").each(function() {
-        let item = document.querySelector('#inputName');
-        let itemValError = document.querySelector('#inputName_error');
-        if (this.innerText === item.value) {
-            let errMsg = "user already exists in the list";
-            nieOkey(item, itemValError, 'Nazwa się powtarza, taki produkt już istnieje');
-            spr = false;
-            return false;
-        }
-        else{
-            okey(item,itemValError,'');
-            spr = true;
-        }
-    });
 
     if(item.value.length === 0){
         nieOkey(item,itemValError,"pole musi być uzupełnione");
     }
     else{
         if(item.value.length <= 10){
-            if(spr){
+            //if(spr){
                 if(item.value.match(pattern)){
                     okey(item,itemValError,"wydaje się ok");
                     return true;
@@ -65,7 +45,7 @@ function validInputName(){
                     nieOkey(item,itemValError,"nazwa powinna składać się jedynie z liter");
                     return false;
                 }
-            }
+            //}
         }
         else{
             nieOkey(item,itemValError,"nazwa powinna mieeć długość do 10-ciu znaków");
@@ -76,17 +56,37 @@ function validInputName(){
 }
 
 function isValueInTable(){
-    $("#myTable").each(function () {
-        let texttocheck = toString(this.innerHTML);
-        if (texttocheck === "dom") {
-            let errMsg = "user already exists in the list";
-            alert(errMsg);
+    // checking name for avoid redundant:
+    let spr = true;
+    let item = document.querySelector('#inputName');
+    let itemValError = document.querySelector('#inputName_error');
+    if(item.value.length ===0){
+        //alert('0 dlugosz');
+        nieOkey(item,itemValError,"pole musi być uzupełnione");
+    }
+    $("#myTable tr td:nth-child(1)").each(function() {
+
+        if (this.innerText === item.value) {
+            //let errMsg = "user already exists in the list";
+            nieOkey(item, itemValError, 'Nazwa się powtarza, taki produkt już istnieje');
+            spr = false;
             return false;
         }
         else{
-            return true;
+            if(item.value.length != 0){
+                okey(item,itemValError,'');
+                spr = true;
+                return true;
+            }
+
         }
-    })
+    });
+    if(spr){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 function validCode(){
@@ -147,12 +147,8 @@ function validBrutto(){
     let vat = document.querySelector('#inputVat');
     let brutto = document.querySelector('#inputCenaBrutto');
 
-    // if(validVat()){
-    //     if(validCenaNetto()){
-             let cenaBrutto = (((parseFloat(net.value)*parseFloat(vat.value))/100) + parseFloat(net.value)).toFixed(2);
-             brutto.value = cenaBrutto.toString();
-    //     }
-    // }
+     let cenaBrutto = (((parseFloat(net.value)*parseFloat(vat.value))/100) + parseFloat(net.value)).toFixed(2);
+     brutto.value = cenaBrutto.toString();
 }
 
 function validKategoria(){
@@ -192,6 +188,7 @@ function validOpcja(){
 }
 
 function validOpcja2(){
+    let item = document.querySelector('#inputOpcje');
     let itemValError = document.querySelector('#checkboxOpcja_error');
     let opcja = 0;
     itemValError.value = 'nic tu nie ma';
@@ -219,23 +216,40 @@ function validAll(){
     let wynik = 0;
     if(validCenaNetto()){wynik +=1;}
     if(validInputName()){wynik += 1;}
+    if(isValueInTable()){wynik += 1;}
     if(validCode()){wynik += 1;}
     if(validVat()){wynik += 1;}
     if(validKategoria()){wynik += 1;}
     if(validOpcja2()){wynik += 1;}
-    if(isValueInTable()){wynik += 1;}
-
-    if(wynik === 6){
-        //allOkey(item,itemValError,'wszystko gra, możemy zatwierdzać');
-        //var errMsg = "user already exists in the list";
-        //alert(errMsg);
+    //alert('po walidacji');
+    if(wynik === 7){
         return true;
     }
     else{
-        //allNoOkey(item,itemValError,'coś nie gra');
         return false;
     }
 
+}
+
+function validAllAfterEditing(){
+    let item = document.getElementById('#button');
+    let itemValError = document.getElementById('#button_error');
+    let wynik = 0;
+    if(validCenaNetto()){wynik +=1;}
+    if(validInputName()){wynik += 1;}
+    //if(isValueInTable()){wynik += 1;}
+    //alert(isValueInTable());
+    if(validCode()){wynik += 1;}
+    if(validVat()){wynik += 1;}
+    if(validKategoria()){wynik += 1;}
+    if(validOpcja2()){wynik += 1;}
+
+    if(wynik === 6){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 function getKategoria(){
@@ -252,8 +266,6 @@ function getKategoria(){
             return 'żywność';
             break;
     }
-
-
 }
 
 function getOcena(){
@@ -272,33 +284,40 @@ function getOpcje(){
     if(document.getElementById('customSwitch3').checked ===true) {sumaOpcji+='3,';}
     if(document.getElementById('customSwitch4').checked ===true) {sumaOpcji+='4,';}
     if(document.getElementById('customSwitch5').checked ===true) {sumaOpcji+='5,';}
-    //alert(sumaOpcji.lenght);
     sumaOpcji = sumaOpcji.slice(0,-1);
-    //alert(sumaOpcji.length);
     return sumaOpcji;
 }
 
 function clearAll(){
     document.getElementById('inputName').value = "";
-    document.querySelector('#inputKod').value = "";
+    document.getElementById('inputKod').value = "";
     document.querySelector('#inputCenaNetto').value = "";
     document.querySelector('#inputVat').value = "";
+    document.querySelector('#inputCenaBrutto').value = "";
     document.querySelector('#inputKategoria').value = "";
-    document.getElementById('customSwitch1').checked ===false;
-    document.getElementById('customSwitch2').checked ===false
-    document.getElementById('customSwitch3').checked ===false;
-    document.getElementById('customSwitch4').checked ===false;
-    document.getElementById('customSwitch5').checked ===false;
+    document.getElementById('customSwitch1').checked = false;
+    document.getElementById('customSwitch2').checked = false
+    document.getElementById('customSwitch3').checked = false;
+    document.getElementById('customSwitch4').checked = false;
+    document.getElementById('customSwitch5').checked = false;
 
-    document.getElementById('exampleRadios5').checked ===true;
+    document.getElementById('exampleRadios5').checked = true;
+    let etykiety = ['#inputName', '#inputKod', '#inputCenaNetto', '#inputVat', '#inputKategoria', '#inputOpcje'];
+    let errory = ['#inputName_error', '#inputKod_error', '#inputCenaNetto_error', '#inputVat_error', '#inputKategoria_error', '#checkboxOpcja_error'];
 
-    
-
+    for(let i=1; i<etykiety.length-1; i++){
+        let item = document.querySelector(etykiety[i]);
+        //alert(etykiety[i]);
+        let itemValError = document.querySelector(errory[i]);
+        okey(item,itemValError,'');
+    }
+    let item = document.querySelector(etykiety[5]);
+    //alert(etykiety[i]);
+    let itemValError = document.querySelector(errory[5]);
+    checkboxNieOkey(itemValError,'');
 }
 
 function sortowanie(sel){
-    //let errMsg = "user already exists in the list";
-    //alert(errMsg);
     if(sel.value === 'nazwaA'){$("#myTable").trigger("sorton",[ [[0,0]] ]);}
     if(sel.value === 'nazwaZ'){$("#myTable").trigger("sorton",[ [[0,1]] ]);}
     if(sel.value === 'cenaA'){$("#myTable").trigger("sorton",[ [[4,0]] ]);}
@@ -311,12 +330,9 @@ function sortowanie(sel){
 function deleteRow(){
     // Delete a row
     $("#myTable").delegate('button.remove', 'click' ,function() {
-        //alert('usuwanie wiersza');
         let t = $('#myTable');
         $(this).closest('tr').remove();
         t.trigger('update');
-        //document.getElementById('info').style.visibility = "visible";
-        //document.getElementById('info').style.color = "red";
         setTimeout(function() {
             alert("usunięto jeden rekord!");
         },1)
@@ -324,24 +340,15 @@ function deleteRow(){
     });
 }
 
-function afterDelete(){
-    //alert('usunięto 1 rekord');
-    document.getElementsByClassName('popupwindow').style.color = "red";
-    //$(".popupwindow").visibili
-}
-
 function editRow(){
-    //alert($(this).closest('tr').find('td:eq(0)').text());
     $("#myTable").delegate('button.edit', 'click', function() {
-        //alert('zmiana komórki');
         let curRow = $(this).closest('tr');
         //let col1 = curRow.find('td:eq(0)').text();
         document.getElementById('inputName').value = curRow.find('td:eq(0)').text();
         document.querySelector('#inputKod').value = curRow.find('td:eq(1)').text();
         document.querySelector('#inputCenaNetto').value = curRow.find('td:eq(2)').text();
         document.querySelector('#inputVat').value = curRow.find('td:eq(3)').text();
-
-        //alert($(this).closest('tr').find('td:eq(0)').text());
+        validBrutto();
         // kategoria:
         switch(curRow.find('td:eq(5)').text()){
             case "odzież":
@@ -380,6 +387,7 @@ function editRow(){
         window.localStorage.setItem('editingRowId', JSON.stringify(rowId));
         return false;
     });
+    $('#myTable').trigger("update");
 }
 
 function refreshRow(){
@@ -403,37 +411,31 @@ function refreshRow(){
     clearAll();
 }
 
-function sendToBasket(){
-    // ta wersja nie działa - zamiast wywoływać funkcję w buttonie
-    // wstawiłem ją do head-a
-    // i tam działa bardzo dobrze
-    // problem polegał na zwielokrotnianiu wprowadzanych do tabeli danych
-
-    $('#myTable').delegate('button.basket', 'click', function() {
-        let curRow = $(this).closest('tr');
-        let item = {
-            name: curRow.find('td:eq(0)').text(),
-            kod: curRow.find('td:eq(1)').text(),
-            cenaNetto: curRow.find('td:eq(2)').text(),
-            vat: curRow.find('td:eq(3)').text(),
-            cenaBrutto: curRow.find('td:eq(4)').text(),
-            liczbaSztuk: '1',
+function refreshRow2(){
+    let rowIndex = JSON.parse(window.localStorage.getItem('editingRowId'));
+    let oldValue = document.getElementById('myTable').rows[rowIndex+1].cells[0].innerHTML;
+    let newValue = document.getElementById('inputName').value;
+    if(oldValue === newValue){
+        if(validAllAfterEditing()){
+            document.getElementById("myTable").deleteRow(rowIndex+1);
+            $('#myTable').trigger('update');
+            wprowadzaniePoEdycji();
+            localStorage.removeItem('editingRowId');
         }
-        let items = [];
-        if(window.localStorage.getItem('koszyk') === null){
-            items.push(item);
-            window.localStorage.setItem('koszyk', JSON.stringify(items));
-        }
-        else{
-            let kosz = JSON.parse(window.localStorage.getItem('koszyk'));
-            kosz.push(item);
-            window.localStorage.setItem('koszyk',JSON.stringify(kosz));
-        }
-    });
+    }
+    else{
+        document.getElementById("myTable").deleteRow(rowIndex+1);
+        $('#myTable').trigger('update');
+        wprowadzanie();
+        localStorage.removeItem('editingRowId');
+    }
+    return false;
 }
 
 function wprowadzanie(){
+    //alert('przed');
         if(validAll()){
+            alert('po valid all');
             // add row
             var row = '<tr><td>'+document.getElementById('inputName').value+'</td>' +
                 '<td>'+document.getElementById('inputKod').value+'</td>' +
@@ -456,6 +458,128 @@ function wprowadzanie(){
             $('#myTable')
                 .find('tbody').append($row)
                 .trigger('addRows', [$row, resort]);
-            return false;
+            return true;
         }
+        return false;
 }
+
+function wprowadzaniePoEdycji(){
+    // add row
+    var row = '<tr><td>'+document.getElementById('inputName').value+'</td>' +
+        '<td>'+document.getElementById('inputKod').value+'</td>' +
+        '<td>'+document.getElementById('inputCenaNetto').value+'</td>' +
+        '<td>'+document.getElementById('inputVat').value+'</td>' +
+        '<td>'+document.getElementById('inputCenaBrutto').value+'</td>' +
+        '<td>'+getKategoria()+'</td>' +
+        '<td>'+getOpcje()+'</td>' +
+        '<td>'+getOcena()+'</td>' +
+        '<td>fotka.jpg</td>' +
+        '<td><button type="button" class="basket" title="toBasket">DO KOSZYKA</button>' +
+        '<button type="button" class="edit" title="toEdition" onclick="editRow()">EDYCJA</button>' +
+        '<button type="button" class="remove" title="Remove this row" onclick="deleteRow()">USUŃ</button></td></tr>',
+
+        $row = $(row),
+
+        resort = true;
+    clearAll();
+
+    $('#myTable')
+        .find('tbody').append($row)
+        .trigger('addRows', [$row, resort]);
+    return true;
+}
+
+function validAmountInBasket(cell){
+    if(cell.innerHTML){
+        if(cell.innerHTML < 0){
+            cell.innerHTML = 0;
+        }
+    }
+    else{
+        cell.innerHTML = 0;
+    }
+    // tutaj może usuwanie wiersza z zerową wartością
+
+    return false;
+}
+
+function sumowanieIlosciTowarow(){
+    let tabela = document.getElementById('basketTable');
+    //let tabelaBody = tabela.getElementsByTagName('tr');
+    let iloscWierszy = tabela.rows.length-1;
+    let sum = 0;
+    for(let i = 1; i <= iloscWierszy; i++){
+        sum += (parseFloat(tabela.rows[i].cells[2].innerHTML) * parseFloat(tabela.rows[i].cells[1].innerHTML));
+    }
+    return sum;
+}
+
+function sumowanieKosztow(){
+    let sumaKosztow = sumowanieIlosciTowarow() + getCostOfDelivery();
+    document.querySelector('#price').value = sumaKosztow;
+    //document.getElementById("price").innerHTML = toString(sum);
+}
+
+function doTabeliKoszyka(itemInBasket){
+    var row = '<tr><td>'+itemInBasket.name+'</td>' +
+        '<td>'+itemInBasket.cenaBrutto+'</td>' +
+        '<td contenteditable="true" onblur="validAmountInBasket(this); sumowanieKosztow()">'+itemInBasket.liczbaSztuk+'</td></tr>',
+
+        $row = $(row),
+        resort = true;
+
+    $('#basketTable')
+        .find('tbody').append($row)
+        .trigger('addRows', [$row, resort]);
+    return false;
+}
+
+function wprowadzanieDoKoszyka(){
+    // tutaj powinno być czyszczeniestarego koszyka
+
+    let storageItems = window.localStorage.getItem('koszyk');
+
+    if(storageItems){
+        $('#exampleModal').modal('show');
+        let kosz = JSON.parse(storageItems);
+        for(let i = 0; i<kosz.length; i++){
+            doTabeliKoszyka(kosz[i]);
+            sumowanieKosztow();
+        }
+    }
+    else{
+        alert('Koszyk jest pusty - Kup coś...');
+        $('#exampleModal').modal('hide');
+    }
+}
+
+function czyszczenieStorage(){
+    if(!sumowanieIlosciTowarow()){
+        alert('Transakcja anulowana - wybrano zerowe ilości artykułów');
+    }
+    else{
+        alert('Zakup dokonany pomyślnie. Dziękujemy.');
+    }
+    localStorage.removeItem('koszyk');
+}
+
+function getCostOfDelivery(){
+    let cost = document.querySelector('#opcjeDostawy').value;
+    switch(cost){
+        case "1":
+            return 15;
+            break;
+        case "2":
+            return 20;
+            break;
+        case "3":
+            return 0;
+            break;
+    }
+
+
+}
+
+let item = document.querySelector('#inputName');
+let itemValError = document.querySelector('#inputName_error');
+okey(item,itemValError,'');

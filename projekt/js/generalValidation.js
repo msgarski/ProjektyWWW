@@ -32,7 +32,7 @@ function allNoOkey(item,itemValError, message){
 
 function checkboxOkey(itemValError, message){
     itemValError.innerHTML = message;
-    //itemValError.classList.add('valid-feedback');
+    itemValError.classList.add('valid-fieldset');
     //itemValError.classList.remove('invalid-feedback');
 }
 

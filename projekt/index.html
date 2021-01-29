@@ -19,7 +19,10 @@
     <script src="js/generalValidation.js"></script>
     <script> $(function() {
             $("#myTable").tablesorter();
-    });</script>
+    });</script><!-- tabela towarów inicjalizacja-->
+    <!--<script> $(function() {
+        $("#basketTable").tablesorter();
+    });</script>--><!-- tabela koszyka inicjalizacja-->
     <!--
     <script>$(function() {
        //$("table").tablesorter({ theme : 'blue', sortList: [[3,1],[0,0]] });
@@ -71,7 +74,7 @@
             }
         });
     });</script>
-    -->
+    --><!-- stara funkcja wprowadzania do tabeli towarów -->
     <script>$(function() {
         $('#inputName').onblur(function (){
             $('#myTable').each(function () {
@@ -86,22 +89,22 @@
                 }
             })
         })
-    });</script>
+    });</script><!-- próbna funkcja szukania duplikatów - do usunięcia chyba-->
     <script>$(function() {
         // czemuś nie działa....
         $("#extSorting").onchange(function() {// apply an ascending sort on the 5th column (zero-based index)
             $("#myTable").trigger("sorton",[ [[0,1]] ]);
             return false;});
-    });</script>
+    });</script><!-- niedziałająca funkcja sortowania tabeli -->
     <script>$(function() {
         // dodawanie do koszyka:
         $('#myTable').delegate('button.basket', 'click', function() {
             let curRow = $(this).closest('tr');
             let item = {
                 name: curRow.find('td:eq(0)').text(),
-                kod: curRow.find('td:eq(1)').text(),
-                cenaNetto: curRow.find('td:eq(2)').text(),
-                vat: curRow.find('td:eq(3)').text(),
+                //kod: curRow.find('td:eq(1)').text(),
+                //cenaNetto: curRow.find('td:eq(2)').text(),
+                //vat: curRow.find('td:eq(3)').text(),
                 cenaBrutto: curRow.find('td:eq(4)').text(),
                 liczbaSztuk: '1',
             }
@@ -112,12 +115,21 @@
             }
             else{
                 let kosz = JSON.parse(window.localStorage.getItem('koszyk'));
-                kosz.push(item);
+                let zmiana = false;
+                kosz.forEach(function(artykul){
+                    if(artykul.name === item.name){
+                        artykul.liczbaSztuk = parseInt(artykul.liczbaSztuk)+1;
+                        zmiana = true;
+                    }
+                });
+                if(!zmiana){
+                    kosz.push(item);
+                }
+
                 window.localStorage.setItem('koszyk',JSON.stringify(kosz));
             }
         });
-    });</script>
-
+    });</script><!-- dodawanie do koszyka -->
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -138,15 +150,17 @@
                     <a class="nav-link" href="instrukcja.pdf">Instrukcja do zajęć</a>
                 </li>
             </ul>
-            <button type="button" class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary my-2 my-sm-0" data-toggle="modal" onclick="wprowadzanieDoKoszyka()">
                 Koszyk
             </button>
         </div>
+
     </nav>
 </header>
 
 <!-- Main content -->
 <main role="main" class="flex-shrink-0">
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-4 col-md-2 col-lg-1 alert-danger">
@@ -158,7 +172,7 @@
                         <label for="inputName" class="col-sm-2 col-form-label">Nazwa Towaru</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="text" id="inputName" placeholder="tutaj wpisz nazwę towaru..."
-                                   onblur="validInputName(); isValueInTable()">
+                                   onblur="validInputName()">
                             <div id="inputName_error"></div>
                         </div>
                     </div>
@@ -265,7 +279,7 @@
                     <div class="buttonholder">
                         <div class="col-sm-10">
                             <button type="button" class="btn btn-primary" id="button" onclick="wprowadzanie()">Wprowadź artykuł</button>
-                            <button type="button" class="btn btn-primary" id="buttonEdit" style="visibility:hidden" onclick="refreshRow()">Zatwierdź po edycji</button>
+                            <button type="button" class="btn btn-primary" id="buttonEdit" style="visibility:hidden" onclick="refreshRow2()">Zatwierdź po edycji</button>
                         </div>
 
                     </div>
@@ -287,31 +301,32 @@
 
                 </select>
             </div>
-            <table id="myTable" class="tablesorter tablesorter-blue">
-                <thead>
-                <tr>
-                    <th>Nazwa</th>
-                    <th class="sorter-false">Kod</th>
-                    <th class="sorter-false">Cena netto</th>
-                    <th class="sorter-false">Vat</th>
-                    <th>Cena brutto</th>
-                    <th class="sorter-false">Kateoria</th>
-                    <th class="sorter-false">Opcje</th>
-                    <th>Ocena</th>
-                    <th class="sorter-false">Zdjęcie</th>
-                    <th class="sorter-false" width="250">Działania</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td>dom</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>1</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                <tr><td>hkkk</td><td>66-22</td><td>100</td><td>3</td><td>14</td><td>2,3</td><td>2,2</td><td>3</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                <tr><td>asi</td><td>66-22</td><td>1000</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>4</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                <tr><td>jek</td><td>66-22</td><td>10</td><td>3</td><td>20</td><td>2,3</td><td>2,2</td><td>5</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                <tr><td>bkk</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>3</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                <tr><td>ckkke</td><td>66-22</td><td>1000000</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>1</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                <tr><td>rkkk</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>2</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
-                </tbody>
-            </table>
+                <table id="myTable" class="tablesorter tablesorter-blue">
+                    <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th class="sorter-false">Kod</th>
+                        <th class="sorter-false">Cena netto</th>
+                        <th class="sorter-false">Vat</th>
+                        <th>Cena brutto</th>
+                        <th class="sorter-false">Kateoria</th>
+                        <th class="sorter-false">Opcje</th>
+                        <th>Ocena</th>
+                        <th class="sorter-false">Zdjęcie</th>
+                        <th class="sorter-false" width="250">Działania</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>dom</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>1</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    <tr><td>hkkk</td><td>66-22</td><td>100</td><td>3</td><td>14</td><td>2,3</td><td>2,2</td><td>3</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    <tr><td>asi</td><td>66-22</td><td>1000</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>4</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    <tr><td>jek</td><td>66-22</td><td>10</td><td>3</td><td>20</td><td>2,3</td><td>2,2</td><td>5</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    <tr><td>bkk</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>3</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    <tr><td>ckkke</td><td>66-22</td><td>1000000</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>1</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    <tr><td>rkkk</td><td>66-22</td><td>10</td><td>3</td><td>13</td><td>2,3</td><td>2,2</td><td>2</td><td>f.j</td><td><button type="button" class="remove" title="Remove this row">USUŃ</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>
@@ -324,7 +339,7 @@
 </footer>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" visibility="hidden">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -333,12 +348,45 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                To będzie koszyk, w przyszłości...
-            </div>
+            <table id="basketTable">
+                <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Cena brutto</th>
+                    <th>Ilość</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--
+                <tr><td>dom</td><td>13</td><td contenteditable="true" onblur="validAmount(this)">1</td></tr>
+                <tr><td>hkkk</td><td>14</td><td>3</td></tr>
+                <tr><td>asi</td><td>13</td><td>4</td></tr>
+                -->
+                </tbody>
+
+            </table>
+            <form>
+                <div class="form-group row">
+                    <label for="opcjeDostawy" class="col-sm-2 col-form-label">Opcje dostawy</label>
+                    <div class="col-sm-10">
+                        <select class="custom-select" id="opcjeDostawy"  value="" onchange="sumowanieKosztow()">
+                            <option selected value="1">poczta - koszt: 15zł</option>
+                            <option value="2">kurier - koszt: 20zł</option>
+                            <option value="3">odbiór własny - koszt: 0zł</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="price" id="wartoscZamowienia" class="col-sm-2 col-form-label">całkowita kwota brutto</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="price" disabled>
+                    </div>
+                </div>
+            </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                <button type="button" class="btn btn-primary">Zapisz zmiany</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="czyszczenieStorage()">Kup</button>
+            </div>
+            </div>
             </div>
         </div>
     </div>
