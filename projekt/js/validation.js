@@ -61,7 +61,6 @@ function isValueInTable(){
     let item = document.querySelector('#inputName');
     let itemValError = document.querySelector('#inputName_error');
     if(item.value.length ===0){
-        //alert('0 dlugosz');
         nieOkey(item,itemValError,"pole musi być uzupełnione");
     }
     $("#myTable tr td:nth-child(1)").each(function() {
@@ -221,7 +220,6 @@ function validAll(){
     if(validVat()){wynik += 1;}
     if(validKategoria()){wynik += 1;}
     if(validOpcja2()){wynik += 1;}
-    //alert('po walidacji');
     if(wynik === 7){
         return true;
     }
@@ -238,7 +236,6 @@ function validAllAfterEditing(){
     if(validCenaNetto()){wynik +=1;}
     if(validInputName()){wynik += 1;}
     //if(isValueInTable()){wynik += 1;}
-    //alert(isValueInTable());
     if(validCode()){wynik += 1;}
     if(validVat()){wynik += 1;}
     if(validKategoria()){wynik += 1;}
@@ -305,7 +302,7 @@ function clearAll(){
     let etykiety = ['#inputName', '#inputKod', '#inputCenaNetto', '#inputVat', '#inputKategoria', '#inputOpcje'];
     let errory = ['#inputName_error', '#inputKod_error', '#inputCenaNetto_error', '#inputVat_error', '#inputKategoria_error', '#checkboxOpcja_error'];
 
-    for(let i=1; i<etykiety.length-1; i++){
+    for(let i=0; i<etykiety.length-1; i++){
         let item = document.querySelector(etykiety[i]);
         //alert(etykiety[i]);
         let itemValError = document.querySelector(errory[i]);
@@ -429,13 +426,18 @@ function refreshRow2(){
         wprowadzanie();
         localStorage.removeItem('editingRowId');
     }
+    // document.getElementById('myTable').rows[rowIndex+1].cells[0].innerHTML = document.getElementById('inputName').value;
+    document.getElementById("buttonEdit").style.visibility = 'hidden';
+    //document.getElementById("button").disabled = true;
+    document.getElementById("button").style.visibility = 'visible';
+    //clearAll();
     return false;
 }
 
 function wprowadzanie(){
     //alert('przed');
         if(validAll()){
-            alert('po valid all');
+            //alert('po valid all');
             // add row
             var row = '<tr><td>'+document.getElementById('inputName').value+'</td>' +
                 '<td>'+document.getElementById('inputKod').value+'</td>' +
@@ -536,6 +538,14 @@ function doTabeliKoszyka(itemInBasket){
 
 function wprowadzanieDoKoszyka(){
     // tutaj powinno być czyszczeniestarego koszyka
+    let tabela = document.getElementById("basketTable");
+    for(let i=0; i<tabela.rows.length; i++){
+        if(tabela.rows.length >1){
+            tabela.deleteRow(1);
+        }
+
+    }
+
 
     let storageItems = window.localStorage.getItem('koszyk');
 
@@ -580,6 +590,3 @@ function getCostOfDelivery(){
 
 }
 
-let item = document.querySelector('#inputName');
-let itemValError = document.querySelector('#inputName_error');
-okey(item,itemValError,'');

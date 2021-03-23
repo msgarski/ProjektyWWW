@@ -4,7 +4,6 @@
     <list default="true" id="2d6823df-94ff-4c3a-b036-007316d8990b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/generalValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/generalValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/validation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +35,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../czesci_samochodowe_janka" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -79,29 +78,14 @@
       <workItem from="1611646994708" duration="11570000" />
       <workItem from="1611678410984" duration="9293000" />
       <workItem from="1611736411998" duration="10352000" />
-      <workItem from="1611934847166" duration="22285000" />
+      <workItem from="1611934847166" duration="24959000" />
+      <workItem from="1611996034966" duration="1489000" />
+      <workItem from="1613143947490" duration="43000" />
+      <workItem from="1615475054102" duration="199000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="309" y="61" key="#Inspections" timestamp="1610616561412">
-      <screen x="0" y="0" width="1366" height="768" />
-    </state>
-    <state x="309" y="61" key="#Inspections/0.0.1366.768@0.0.1366.768" timestamp="1610616561412" />
-    <state x="463" y="137" key="FileChooserDialogImpl" timestamp="1604838527875">
-      <screen x="0" y="0" width="1366" height="768" />
-    </state>
-    <state x="463" y="137" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1604838527875" />
-    <state x="339" y="167" key="run.anything.popup" timestamp="1610640158215">
-      <screen x="0" y="0" width="1366" height="768" />
-    </state>
-    <state x="339" y="167" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1610640158215" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1611651110763">
-      <screen x="0" y="0" width="1366" height="768" />
-    </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1611651110763" />
   </component>
 </project>
