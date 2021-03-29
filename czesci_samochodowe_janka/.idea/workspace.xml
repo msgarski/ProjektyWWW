@@ -26,7 +26,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.0" />
   <component name="ProjectId" id="1kap6A30on7xqfSRI0fdF7CpU9h" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -36,8 +36,9 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="/usr/bin/php" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -52,32 +53,16 @@
       <workItem from="1605948379657" duration="1623000" />
       <workItem from="1605950874787" duration="11547000" />
       <workItem from="1606304527221" duration="515000" />
+      <workItem from="1615475254282" duration="32000" />
+      <workItem from="1615530914429" duration="3498000" />
+      <workItem from="1615551435930" duration="1208000" />
+      <workItem from="1615561208254" duration="138000" />
+      <workItem from="1615561632918" duration="898000" />
+      <workItem from="1616238916627" duration="197000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="261" y="26" width="824" height="682" key="#CLI_Interpreters" timestamp="1605951595331">
-      <screen x="0" y="0" width="1366" height="741" />
-    </state>
-    <state x="261" y="26" width="824" height="682" key="#CLI_Interpreters/0.0.1366.741@0.0.1366.741" timestamp="1605951595330" />
-    <state x="380" y="5" width="606" height="727" key="#PHP" timestamp="1605951596781">
-      <screen x="0" y="0" width="1366" height="741" />
-    </state>
-    <state x="380" y="5" width="606" height="727" key="#PHP/0.0.1366.741@0.0.1366.741" timestamp="1605951596781" />
-    <state x="466" y="127" width="424" height="482" key="FileChooserDialogImpl" timestamp="1605951188053">
-      <screen x="0" y="0" width="1366" height="741" />
-    </state>
-    <state x="466" y="127" width="424" height="482" key="FileChooserDialogImpl/0.0.1366.741@0.0.1366.741" timestamp="1605951188053" />
-    <state x="503" y="295" width="349" height="146" key="NewPhpFileDialog" timestamp="1605979956578">
-      <screen x="0" y="0" width="1366" height="741" />
-    </state>
-    <state x="503" y="295" width="349" height="146" key="NewPhpFileDialog/0.0.1366.741@0.0.1366.741" timestamp="1605979956578" />
-    <state x="187" y="4" key="SettingsEditor" timestamp="1605951540780">
-      <screen x="0" y="0" width="1366" height="741" />
-    </state>
-    <state x="187" y="4" key="SettingsEditor/0.0.1366.741@0.0.1366.741" timestamp="1605951540780" />
   </component>
 </project>
