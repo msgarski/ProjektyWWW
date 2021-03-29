@@ -4,7 +4,6 @@
     <list default="true" id="2d6823df-94ff-4c3a-b036-007316d8990b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/generalValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/generalValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/validation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +78,9 @@
       <workItem from="1611646994708" duration="11570000" />
       <workItem from="1611678410984" duration="9293000" />
       <workItem from="1611736411998" duration="10352000" />
-      <workItem from="1611934847166" duration="22285000" />
+      <workItem from="1611934847166" duration="24959000" />
+      <workItem from="1611996034966" duration="1489000" />
+      <workItem from="1613143947490" duration="43000" />
     </task>
     <servers />
   </component>
