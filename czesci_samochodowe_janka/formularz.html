@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="przetworzzamowienie.php" method="post">
+        <table style="border: 0;">
+            <tr style="background: #cccccc;">
+                <td style="width: 150px; text-align: center;">Produkt</td>
+                <td style="width: 15px; text-align: center;">Ilość</td>
+            </tr>
+            <tr>
+                <td><label for="opony">Opony</label></td>
+                <td><input type="text" id="opony" name="iloscopon" size="3" maxlength="3"></td>
+            </tr>
+            <tr>
+                <td><label for="olej">Olej</label></td>
+                <td><input type="text" id="olej" name="iloscoleju" size="3" maxlength="3"></td>
+            </tr>
+            <tr>
+                <td><label for="swiece">Świece zapłonowe</label></td>
+                <td><input type="text" id="swiece" name="iloscswiec" size="3" maxlength="3"></td>
+            </tr>
+            <tr>
+                <td>
+                    Jak dowiedzieliście się Państwo o naszej firmie?
+                </td>
+                <td>
+                    <select name="jak">
+                        <option value="a">Jestem atałym klientem</option>
+                        <option value="b">Reklama telewizyjna</option>
+                        <option value="c">Książka telefoniczna</option>
+                        <option value="d">Znajomy</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Złóż zamówienie"></td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>
