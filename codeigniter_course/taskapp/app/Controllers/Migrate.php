@@ -6,19 +6,18 @@ class Migrate extends BaseController
 {
     public function index()
     {
-        //$this->forge->disableForeignKeyChecks();
         $migrate = \Config\Services::migrations();
-
-        try
-        {
+        
+        try {
+        
             $migrate->latest();
-            echo "Migrated!";
+            
+            echo "migrated";
+            
+        } catch (\Exception $e) {
+            
+            echo $e->getMessage();
+            
         }
-        catch(\Exception $e)
-        {
-            $e->getMessage();
-        }
-
-        //$this->forge->enableForeignKeyChecks();
     }
 }

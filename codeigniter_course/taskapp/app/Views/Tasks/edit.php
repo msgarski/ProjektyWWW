@@ -1,35 +1,26 @@
-<?= $this->extend('layouts/default'); ?>
+<?= $this->extend('layouts/default') ?>
 
-<?= $this->section('title') ?>Edit row<?php $this->endsection() ?>
+<?= $this->section('title') ?>Edit task<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 
-<h1>New task</h1>
-
-<!--  <form method="post" action="/tasks/create">  -->
+<h1>Edit task</h1>
 
 <?php if (session()->has('errors')): ?>
     <ul>
-        <?php foreach(session('errors') as $errorek): ?>
-            <li><?= $errorek ?></li>
-        <?php endforeach ?>
+        <?php foreach(session('errors') as $error): ?>
+            <li><?= $error ?></li>
+        <?php endforeach; ?>
     </ul>
-
 <?php endif ?>
 
-
-<?= form_open('/tasks/update/'.$task->id) ?>
+<?= form_open("/tasks/update/" . $task->id) ?>
 
     <?= $this->include('Tasks/form') ?>
-
-    <button>Save</button>
-    <a href="<?= site_url('/tasks/show/'.$task->id)?>">Cancel</a>
     
-
+    <button>Save</button>
+    <a href="<?= site_url("/tasks/show/" . $task->id) ?>">Cancel</a>
 
 </form>
 
-
-
-<?= $this->endsection() ?>
-
+<?= $this->endSection() ?>

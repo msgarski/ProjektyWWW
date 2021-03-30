@@ -1,30 +1,28 @@
-<!-- //najpierw wskazujemy na layout strony -->
-<?= $this->extend('layouts/default'); ?>
+<?= $this->extend('layouts/default') ?>
 
-<!-- teraz uzupełniamy treść zmienną sekcji w layoucie -->
-<?= $this->section('title') ?>Show table<?= $this->endsection() ?>
+<?= $this->section('title') ?>Task<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 
-<h1>Tasks</h1>
+<h1>Task</h1>
 
-<a href="<?= site_url('/tasks') ?>">&laquo; back to index</a>
+<a href="<?= site_url("/tasks") ?>">&laquo; back to index</a>
 
 <dl>
     <dt>ID</dt>
     <dd><?= $task->id ?></dd>
-
-    <dt>Decription</dt>
+    
+    <dt>Description</dt>
     <dd><?= esc($task->description) ?></dd>
-
-    <dt>Created</dt>
+    
+    <dt>Created at</dt>
     <dd><?= $task->created_at ?></dd>
-
-    <dt>updated_at</dt>
+    
+    <dt>Updated at</dt>
     <dd><?= $task->updated_at ?></dd>
 </dl>
 
-<a href="<?= site_url('/tasks/edit/'.$task->id) ?>">Edit</a>
-<a href="<?= site_url('/tasks/delete/'.$task->id) ?>">Delete Task</a>
+<a href="<?= site_url('/tasks/edit/' . $task->id) ?>">Edit</a>
+<a href="<?= site_url('/tasks/delete/' . $task->id) ?>">Delete</a>
 
-<?= $this->endsection() ?>
+<?= $this->endSection() ?>

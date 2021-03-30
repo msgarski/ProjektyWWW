@@ -1,15 +1,11 @@
 <?= $this->extend("layouts/default") ?>
 
-
-<?= $this->section("title") ?>
-
-Dom jako tytuł
-
-<?= $this->endSection() ?>
-
+<?= $this->section("title") ?>Home<?= $this->endSection() ?>
 
 <?= $this->section("content") ?>
 
-        <h1>Welcome 2</h1>
+    <h1>Welcome</h1>
+
+    <a href="<?= site_url("/signup") ?>">Sign up</a>
 
 <?= $this->endSection() ?>

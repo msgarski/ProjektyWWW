@@ -3,136 +3,132 @@
 namespace App\Controllers;
 
 use App\Entities\Task;
-use App\Models\TaskModel;
 
 class Tasks extends BaseController
 {
 	private $model;
-
+	
 	public function __construct()
 	{
-		$this->model = new \App\Models\TaskModel;
-		
+        $this->model = new \App\Models\TaskModel;
 	}
-
-	private function getTaskOr404Error($id)
-	{
-		$zapytanie = $this->model->find($id);
-
-		if($zapytanie === null)
-		{
-			throw new \CodeIgniter\Exceptions\PageNotFoundException(
-				"Rekord z tym id = $id, nie istnieje w bazie danych"
-			);
-		}
-		return $zapytanie;
-	}
-
+	
 	public function index()
 	{
-		$data = $this->model->findAll();
+        $data = $this->model->findAll();
 		
-		// I-szy argument to widok, którego to dotyczy, a drugi:
-		// 'task' to kreaowana w widoku zmienna, a $data to przesyłane dane
-		return view('Tasks/index', ['task'=>$data]);
+		return view("Tasks/index", ['tasks' => $data]);
 	}
-
+	
 	public function show($id)
-	{
-		$zapytanie = $this->getTaskOr404Error($id);
-		// 'task' to kreaowana zmienna, a $zapytanie to przesyłane dane
+    {
+        $task = $this->getTaskOr404($id);
+		
 		return view('Tasks/show', [
-			'task'=>$zapytanie
-			]);
-		//dd($task);
+            'task' => $task
+        ]);
 	}
-
+	
 	public function new()
 	{
-		$task = new Task;
-
-		//return view('Tasks/new', $task);
+        $task = new Task;
+		
 		return view('Tasks/new', [
-			'task'	=> $task
-		]);
+		    'task' => $task
+        ]);
 	}
-
+	
 	public function create()
 	{
-		$task = new Task($this->request->getPost());
+        $task = new Task($this->request->getPost());
+		
+		if ($this->model->insert($task)) {
 
-		if($this->model->insert($task))
-		{
 			return redirect()->to("/tasks/show/{$this->model->insertID}")
-							->with('info', 'Udało się zapisać rekord');
-		}
-		else
-		{
+							 ->with('info', 'Task created successfully');
+		
+        } else {
+
 			return redirect()->back()
-							->with('errors', $this->model->errors())
-							->with('warning', 'Niewłaściwe dane wprowadzono')
-							->withInput();
+							 ->with('errors', $this->model->errors())
+							 ->with('warning', 'Invalid data')
+							 ->withInput();
 		}
-
 	}
-
+	
 	public function edit($id)
 	{
-		// funkcja find() dostosowuje się do wybranej w modelu tabeli
-		$zapytanie = $this->getTaskOr404Error($id);
-
-		// 'task' to kreaowana zmienna, a $zapytanie to przesyłane dane
+		$task = $this->getTaskOr404($id);
+		
 		return view('Tasks/edit', [
-			'task'=>$zapytanie
-			]);
+            'task' => $task
+        ]);
 	}
-
-	public function update($id)
+	
+    public function update($id)
 	{
-		//$model = new \App\Models\TaskModel;
+        $task = $this->getTaskOr404($id);
 		
-		//$task = new Task($this->request->getPost())
-		$task = $this->getTaskOr404Error($id);
-
 		$task->fill($this->request->getPost());
-
-		if(!$task->hasChanged())
-		{
-			return redirect()->back()
-							->with('warning', 'Nic nie ma do odnowienia')
-							->withInput();
+		
+		if ( ! $task->hasChanged()) {
+			
+            return redirect()->back()
+                             ->with('warning', 'Nothing to update')
+                             ->withInput();
 		}
 		
-		if($this->model->save($task))
-		{
-			return redirect()->to("/tasks/show/$id")
-							->with('info', 'Update successfully');
-		}
-		else{
-			return redirect()->back()
-							->with('errors', $this->model->errors())
-							->with('warning', 'Invalid data!!!')
-							->withInput();
-
+        if ($this->model->save($task)) {
+				
+	        return redirect()->to("/tasks/show/$id")
+	                         ->with('info', 'Task updated successfully');
+							 
+		} else {
+			
+            return redirect()->back()
+                             ->with('errors', $this->model->errors())
+                             ->with('warning', 'Invalid data')
+							 ->withInput();
+			
 		}
 	}
-
+	
 	public function delete($id)
 	{
-		$task = $this->getTaskOr404Error($id);
-
-		if($this->request->getMethod() === 'post')
-		{
-			$this->model->delete($id);
-
+        $task = $this->getTaskOr404($id);
+		
+        if ($this->request->getMethod() === 'post') {
+			
+            $this->model->delete($id);
+			
 			return redirect()->to('/tasks')
-							->with('info', 'Usunięto rekord');
+                             ->with('info', 'Task deleted');
 		}
-
+		
 		return view('Tasks/delete', [
-			'task'	=>	$task
-		]);
+            'task' => $task
+        ]);
 	}
-
 	
+    private function getTaskOr404($id)
+	{
+		$task = $this->model->find($id);
+
+		if ($task === null) {
+
+			throw new \CodeIgniter\Exceptions\PageNotFoundException("Task with id $id not found");
+			
+		}		
+		
+		return $task;
+	}	
 }
+
+
+
+
+
+
+
+
+
