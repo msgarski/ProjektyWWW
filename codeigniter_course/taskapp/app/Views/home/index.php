@@ -9,9 +9,9 @@
     <a href="<?= site_url("/signup") ?>">Sign up</a>
 
 
-    <?php if(session()->has('user_id')): ?>
+    <?php if(current_user()): ?>
 
-        <p>Uzytkownik jest zalogowany</p>
+        <p>Hello, <?= esc(current_user()->name)  ?></p>
 
         <a href="<?= site_url('/logout') ?>">Wyloguj się</a>
 
